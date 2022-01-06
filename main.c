@@ -181,7 +181,9 @@ end:
 	tcsetattr(0, TCSANOW, &tsave);
 	clrscr();
 	if(win) printf("success! ");
-	printf("word was %s\n", word);
+	printf("word was %s\n\nUNCENSORED:\n", word);
+	for(uint s = 0; s < guesses; s++) rg(word, guesstab[s], l);
+	printf("CENSORED:\n");
 	for(uint s = 0; s < guesses; s++) {
 		rgw(word, guesstab[s], l);
 		free(guesstab[s]);
