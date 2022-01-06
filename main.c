@@ -21,7 +21,7 @@ int strcon(char* s, char c) {
 	return 0;
 }
 
-int wsuccess(int8_t* m, uint l) {
+int wsuccess(uint8_t* m, uint l) {
 	for(uint i = 0; i < l; i++) if(m[i] != WORDLE_SLOT) return 0;
 	return 1;
 }
@@ -33,13 +33,13 @@ uint* gentab(char* s, uint l) {
 	return r;
 }
 
-int8_t* worle(char* word, char* guess) {
+uint8_t* worle(char* word, char* guess) {
 	uint wordlen = strlen(word);
 	
 	if(strlen(guess) != wordlen) return NULL;
 
 	uint* lctab = gentab(word, wordlen);
-	int8_t* ret = malloc(sizeof(int8_t) * wordlen);
+	uint8_t* ret = malloc(sizeof(int8_t) * wordlen);
 	memset(ret, 0xFF, wordlen);
 	
 	for(uint i = 0; i < wordlen; i++) {
@@ -116,8 +116,9 @@ int main(int argc, char** argv) {
 		printf("abcdefghijklmnopqrstuvwxyz");
 		printf("\033[%u;%uH", guesses, 1);
 
+		int in;
 		rd:
-		int in = 0;
+		in = 0;
 		while(1) {
 			unsigned char c;
 			do { c = getchar(); } while(c == 255);
@@ -159,7 +160,7 @@ int main(int argc, char** argv) {
 
 	//	printf("WORD == %s\n", word);
 	//	printf("GUESS == %s\n", guesstab[guesses - 1]);
-		int8_t* res = worle(word, guesstab[guesses - 1]);
+		uint8_t* res = worle(word, guesstab[guesses - 1]);
 		if(!res) {
 			printf("\033[%u;%uH", guesses + 2, 1);
 			printf("wrong number of characters? (should be %u)\n", l);
@@ -179,9 +180,10 @@ int main(int argc, char** argv) {
 end:
 	tcsetattr(0, TCSANOW, &tsave);
 	clrscr();
-	if(win) printf("success! (%s)\n", word);
+	if(win) printf("success! ");
+	printf("word was %s\n", word);
 	for(uint s = 0; s < guesses; s++) {
-		if(win) rgw(word, guesstab[s], l);
+		rgw(word, guesstab[s], l);
 		free(guesstab[s]);
 	}
 	free(guesstab);
