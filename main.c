@@ -87,7 +87,7 @@ void vword(char* s) {
 }
 
 int main(int argc, char** argv) {
-	if(argc < 2) printf("argv[1] must contain word\n");
+	if(argc < 2) exit(!!printf("argv[1] must contain word\n"));
 	char* word = argv[1];
 	uint l = strlen(word);
 	for(uint i = 0; i < l; i++) if(word[i] < 'a' || word[i] > 'z') exit(!!printf("word must be all lowercase letters\n"));
