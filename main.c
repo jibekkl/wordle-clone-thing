@@ -162,7 +162,7 @@ int main(int argc, char** argv) {
 		int8_t* res = worle(word, guesstab[guesses - 1]);
 		if(!res) {
 			printf("\033[%u;%uH", guesses + 2, 1);
-			printf("wrong number of characters?\n");
+			printf("wrong number of characters? (should be %u)\n", l);
 			printf("\033[%u;%uH", guesses + 1, 1);
 			for(uint i = 0; i < strlen(guesstab[guesses - 1]); i++) putchar(' ');
 			printf("\033[%u;%uH", guesses, 1);
